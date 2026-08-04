@@ -1,0 +1,76 @@
+name: nova_media
+description: "A powerful offline media player combining features of Lark Player, VLC, and advanced MP3/MP4 players."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # ==========================================
+  # 1. State Management & Architecture
+  # ==========================================
+  flutter_bloc: ^8.1.3         # إدارة الحالة
+  equatable: ^2.0.5            # مقارنة الحالات والأجسام
+
+  # ==========================================
+  # 2. Audio & Video Core Engine (Offline)
+  # ==========================================
+  just_audio: ^0.9.36          # محرك الصوت الأساسي المباشر
+  just_audio_background: ^0.0.1-beta.12
+  audio_service: ^0.18.12      # إدارة خدمات الصوت المتقدمة
+  audio_session: ^0.1.18       # إدارة جلسات الصوت والتركيز (Audio Focus)
+  video_player: ^2.8.2         # تشغيل الفيديو
+
+  # ==========================================
+  # 3. Media Fetching & Permissions (Device)
+  # ==========================================
+  on_audio_query: ^2.9.0       # قراءة ملفات الصوت والميديا من الهاتف
+  photo_manager: ^3.11.0        # جلب الفيديوهات والصور من الاستوديو
+  permission_handler: ^11.3.1  # أذونات الجهاز والتخزين
+
+  # ==========================================
+  # 4. Local Database & Cache (100% Offline)
+  # ==========================================
+  hive: ^2.2.3                 # قاعدة البيانات المحلية
+  hive_flutter: ^1.1.0         # ربط Hive مع فلاتر
+  path_provider: ^2.1.2        # مسارات التخزين الداخلية
+  shared_preferences: ^2.2.2   # الإعدادات البسيطة
+
+
+  # ==========================================
+  # 5. UI Design & Utilities
+  # ==========================================
+  cupertino_icons: ^1.0.6      # الأيقونات
+  google_fonts: ^6.1.0         # الخطوط
+  easy_localization: ^3.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  hive_generator: ^2.0.1       # مولد كود Hive
+  build_runner: ^2.4.8
+  flutter_launcher_icons: "^0.13.1" # 👈 تمت إضافتها لتوليد أيقونة التطبيق تلقائياً
+
+# إعدادات أيقونة التطبيق
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/rr.png"
+
+flutter:
+  uses-material-design: true
+
+  # ==========================================
+  # مسارات الملفات والأصول (Assets)
+  # ==========================================
+  assets:
+    - assets/translations/
+    - assets/images/rr.png
