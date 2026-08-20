@@ -50,6 +50,7 @@ dependencies:
   cupertino_icons: ^1.0.6      # الأيقونات
   google_fonts: ^6.1.0         # الخطوط
   easy_localization: ^3.0.3
+  share_plus: ^13.3.0
 
 dev_dependencies:
   flutter_test:

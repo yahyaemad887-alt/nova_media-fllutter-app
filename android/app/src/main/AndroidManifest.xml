@@ -1,9 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- أذونات الصوتيات والخلفية لـ audio_service -->
+    <!-- أذونات الصوتيات والخلفية لـ AudioService (Android 14+ Compliant) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <!-- أذونات التخزين لأندرويد 12 وما قبله -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
@@ -13,33 +15,36 @@
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <!-- إذن أندرويد 14+ للوسائط المختارة -->
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 
     <application
-        android:label="nova_media"
+        android:label="NOVA MEDIA"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true">
 
-        <!-- إضافة خدمة التشغيل في الخلفية لـ AudioService -->
-        <service android:name="com.ryanheise.audioservice.AudioService"
+        <!-- خدمة التشغيل في الخلفية لـ AudioService -->
+        <service
+            android:name="com.ryanheise.audioservice.AudioService"
             android:foregroundServiceType="mediaPlayback"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="Instantiable">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.ryanheise.audioservice.MediaButtonReceiver"
-            android:exported="true">
+        <!-- مستقبل أزرار الوسائط والسماعات -->
+        <receiver
+            android:name="com.ryanheise.audioservice.MediaButtonReceiver"
+            android:exported="true"
+            tools:ignore="Instantiable">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
 
-        <!-- تغيير اسم الـ Activity ليتوافق مع AudioService -->
+        <!-- النشاط الرئيسي المتوافق مع AudioService -->
         <activity
             android:name="com.ryanheise.audioservice.AudioServiceActivity"
             android:exported="true"
@@ -63,6 +68,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- تعيين أيقونة الإشعار الافتراضية للخدمة -->
+        <meta-data
+            android:name="com.ryanheise.audioservice.default_notification_icon"
+            android:resource="@mipmap/launcher_icon" />
+
     </application>
 
     <queries>

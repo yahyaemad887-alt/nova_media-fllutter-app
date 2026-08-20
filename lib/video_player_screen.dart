@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // 👈 تم التصحيح إلى .dart بدلاً من .h
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final AssetEntity videoEntity;
 
-  const VideoPlayerScreen({super.key, required this.videoEntity}); // 👈 تم التحديث للطريقة الحديثة
+  const VideoPlayerScreen({super.key, required this.videoEntity});
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
@@ -25,7 +26,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    // السماح بتدوير الشاشة بكل الاتجاهات عند فتح الفيديو
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -86,7 +86,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     }
   }
 
-  // تغيير سرعة الفيديو
   void _changeSpeed() {
     List<double> speeds = [0.5, 1.0, 1.25, 1.5, 2.0];
     int nextIndex = (speeds.indexOf(_currentSpeed) + 1) % speeds.length;
@@ -95,7 +94,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _controller?.setPlaybackSpeed(_currentSpeed);
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('السرعة: ${_currentSpeed}x'), duration: const Duration(milliseconds: 800)),
+      SnackBar(
+        content: Text('speed_toast'.tr(args: ['${_currentSpeed}x'])),
+        duration: const Duration(milliseconds: 800),
+      ),
     );
   }
 
@@ -103,7 +105,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void dispose() {
     _hideTimer?.cancel();
     _controller?.dispose();
-    // إعادة الشاشة للوضع العمودي الطبيعي عند الخروج من شاشة الفيديو
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -129,15 +130,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // الفيديو الأساسي في المنتصف
               Center(
                 child: AspectRatio(
                   aspectRatio: _controller!.value.aspectRatio,
                   child: VideoPlayer(_controller!),
                 ),
               ),
-
-              // طبقة التحكم والواجهة
               AnimatedOpacity(
                 opacity: _showControls ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 300),
@@ -158,7 +156,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // الشريط العلوي
                         Padding(
                           padding: const EdgeInsets.only(top: 30, left: 16, right: 16),
                           child: Row(
@@ -171,7 +168,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Text(
-                                  widget.videoEntity.title ?? 'فيديو',
+                                  widget.videoEntity.title ?? 'video_default_title'.tr(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -181,7 +178,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              // زر تغيير السرعة
                               TextButton.icon(
                                 onPressed: _changeSpeed,
                                 icon: const Icon(Icons.speed, color: Color(0xFF00BCD4), size: 20),
@@ -193,8 +189,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             ],
                           ),
                         ),
-
-                        // أزرار التحكم في المنتصف
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -244,8 +238,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             ),
                           ],
                         ),
-
-                        // الشريط السفلي
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
                           child: Row(
@@ -282,7 +274,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                 },
                               ),
                               const SizedBox(width: 10),
-                              // زر قفل الشاشة
                               IconButton(
                                 icon: Icon(
                                   _isLocked ? Icons.lock : Icons.lock_open,
@@ -296,7 +287,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text(_isLocked ? 'تم قفل الشاشة' : 'تم إلغاء القفل'),
+                                      content: Text(_isLocked ? 'screen_locked'.tr() : 'screen_unlocked'.tr()),
                                       duration: const Duration(milliseconds: 800),
                                     ),
                                   );

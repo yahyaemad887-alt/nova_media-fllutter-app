@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'video_player_screen.dart';
 
 // ====================================================================
 // 1. تبويب الفيديوهات (Videos Tab)
 // ====================================================================
 class VideosTabWidget extends StatefulWidget {
-  const VideosTabWidget({super.key});
+  const VideosTabWidget({super.key, required String searchQuery});
 
   @override
   State<VideosTabWidget> createState() => _VideosTabWidgetState();
@@ -51,7 +52,6 @@ class _VideosTabWidgetState extends State<VideosTabWidget> {
       final PermissionState ps = await PhotoManager.requestPermissionExtend();
 
       if (ps.isAuth || ps.hasAccess || ps == PermissionState.limited) {
-        // جلب قائمة الفيديوهات مباشرة بدون الاعتماد على الألبومات
         final List<AssetEntity> media = await PhotoManager.getAssetListRange(
           start: 0,
           end: 5000,
@@ -103,9 +103,9 @@ class _VideosTabWidgetState extends State<VideosTabWidget> {
           children: [
             const Icon(Icons.lock_outline, size: 50, color: Colors.grey),
             const SizedBox(height: 12),
-            const Text(
-              'التطبيق يحتاج صلاحية الوصول للملفات لعرض الفيديوهات',
-              style: TextStyle(color: Colors.white, fontSize: 14),
+            Text(
+              'video_permission_required'.tr(),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
@@ -115,7 +115,7 @@ class _VideosTabWidgetState extends State<VideosTabWidget> {
                 await PhotoManager.openSetting();
                 _fetchVideos();
               },
-              child: const Text('منح الصلاحية من الإعدادات', style: TextStyle(color: Colors.white)),
+              child: Text('open_settings'.tr(), style: const TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -129,9 +129,9 @@ class _VideosTabWidgetState extends State<VideosTabWidget> {
           children: [
             const Icon(Icons.video_library_outlined, size: 60, color: Colors.grey),
             const SizedBox(height: 12),
-            const Text(
-              'لا توجد مقاطع فيديو متاحة في المعرض',
-              style: TextStyle(color: Colors.grey, fontSize: 14),
+            Text(
+              'no_videos_available'.tr(),
+              style: const TextStyle(color: Colors.grey, fontSize: 14),
             ),
             const SizedBox(height: 16),
             IconButton(
@@ -288,7 +288,7 @@ class _VideosLibraryScreenUIState extends State<VideosLibraryScreenUI> {
                 ),
               ],
               flexibleSpace: FlexibleSpaceBar(
-                title: const Text('مكتبة الفيديو', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                title: Text('videos_library_title'.tr(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 background: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -312,9 +312,9 @@ class _VideosLibraryScreenUIState extends State<VideosLibraryScreenUI> {
                     children: [
                       const Icon(Icons.lock_outline, size: 50, color: Colors.grey),
                       const SizedBox(height: 12),
-                      const Text(
-                        'يلزم السماح بالوصول للفيديوهات من الإعدادات',
-                        style: TextStyle(color: Colors.white),
+                      Text(
+                        'video_permission_required'.tr(),
+                        style: const TextStyle(color: Colors.white),
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton(
@@ -323,15 +323,15 @@ class _VideosLibraryScreenUIState extends State<VideosLibraryScreenUI> {
                           await PhotoManager.openSetting();
                           _fetchVideos();
                         },
-                        child: const Text('فتح الإعدادات', style: TextStyle(color: Colors.white)),
+                        child: Text('open_settings'.tr(), style: const TextStyle(color: Colors.white)),
                       ),
                     ],
                   ),
                 ),
               )
             else if (_videoList.isEmpty)
-                const SliverFillRemaining(
-                  child: Center(child: Text('لا توجد فيديوهات متاحة', style: TextStyle(color: Colors.grey))),
+                SliverFillRemaining(
+                  child: Center(child: Text('no_videos_available'.tr(), style: const TextStyle(color: Colors.grey))),
                 )
               else
                 _isGridView ? _buildGrid() : _buildList(),
@@ -389,7 +389,7 @@ class _VideosLibraryScreenUIState extends State<VideosLibraryScreenUI> {
                 ),
               ),
               title: Text(
-                video.title ?? 'فيديو بدون عنوان',
+                video.title ?? 'video_untitled'.tr(),
                 style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -482,7 +482,7 @@ class _VideoGridItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                video.title ?? 'فيديو بدون عنوان',
+                video.title ?? 'video_untitled'.tr(),
                 style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
