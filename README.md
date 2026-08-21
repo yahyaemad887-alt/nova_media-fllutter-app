@@ -25,6 +25,14 @@ NOVA Media is a lightweight, feature-rich, and high-performance multimedia playe
   <img src="assets/screen/rr.png" width="200"/>
 </div>
 
+---
+
+## 📥 Download & Test
+
+You can download the ready-to-use APK and test the app directly on your Android device:
+* **[📥 Download Nova Media v1.0 (APK)](https://www.mediafire.com/file/md2xpxbeb6zp0oe/NOVA_MEDIA.apk/file)**
+
+---
 ## 👨‍💻 Developed By
 
 **Yahia Emad Samir**
