@@ -8,7 +8,7 @@ NOVA Media is a lightweight, feature-rich, and high-performance multimedia playe
 * **Compact Footprint**: Optimized performance with an APK size of only **20 MB**.
 * **Smart Organization**: Automatically manages your music library, folders, and playlists.
 * **User Experience**: Includes features like:
-   *   **Recently Played**: Keeps track of your latest listening history.
+     *   **Recently Played**: Keeps track of your latest listening history.
    *   **Favorites**: Manage your favorite songs with ease.
    *   **Sleep Timer**: Set a timer to automatically pause your music.
    *   **Dark Mode**: Optimized for comfortable viewing in low-light environments.
