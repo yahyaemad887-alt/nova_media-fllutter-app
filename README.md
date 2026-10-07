@@ -1,5 +1,15 @@
 # NOVA Media
 
+## 💡 The Problem & How NOVA MEDIA Solves It
+
+### 🔴 The Problem
+Many stock or third-party media player apps on Android are bloated, heavy in size, cluttered with intrusive ads, or lack proper local file organization. Users often struggle to find a clean, lightweight, and fast player that handles both local audio songs and videos smoothly while offering a modern dark-themed aesthetic without draining device performance.
+
+### 🟢 How NOVA MEDIA Solves It
+**NOVA MEDIA** solves this by providing a lightning-fast, lightweight (only 20 MB), and ad-free multimedia playback experience built with Flutter. It seamlessly integrates both MP3 audio and MP4 video playback, automatically organizes music libraries and folders, and includes smart features like a sleep timer, favorites, recently played history, and a sleek dark mode—delivering a smooth and distraction-free media experience.
+
+---
+
 NOVA Media is a lightweight, feature-rich, and high-performance multimedia player application built with Flutter. It seamlessly integrates both audio (MP3) and video (MP4) playback into a sleek, dark-themed user interface.
 
 ## 🚀 Key Features
